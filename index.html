@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <style>
+            div.container {
+                display: flex;
+                height: 100px;
+                width: 100%;
+                background-color: #fff;
+            }
+
+            div.box {
+                position: relative;
+                width: 25%;
+                background-color: #ccc;
+                border: 1px solid black;
+            }
+
+            div.h25 {
+                height: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Flexbox Showcase</h1>
+
+        <h2>justify-content</h2>
+        <p>Aligns items horizontally.</p>
+
+        <h3>flex-start</h3>
+        <div class="container" style="justify-content: flex-start">
+            <div class="box"></div>
+        </div>
+
+        <h3>flex-end</h3>
+        <div class="container" style="justify-content: flex-end">
+            <div class="box"></div>
+        </div>
+
+        <h3>center</h3>
+        <div class="container" style="justify-content: center">
+            <div class="box"></div>
+        </div>
+
+        <h3>space-between</h3>
+        <div class="container" style="justify-content: space-between">
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+
+        <h3>space-around</h3>
+        <div class="container" style="justify-content: space-around">
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+
+        <h2>align-items</h2>
+        <p>Aligns items vertically.</p>
+
+        <h3>flex-start</h3>
+        <div class="container" style="align-items: flex-start">
+            <div class="box h25"></div>
+        </div>
+
+        <h3>flex-end</h3>
+        <div class="container" style="align-items: flex-end">
+            <div class="box h25"></div>
+        </div>
+
+        <h3>center</h3>
+        <div class="container" style="align-items: center">
+            <div class="box h25"></div>
+        </div>
+
+        <h3>baseline</h3>
+        <div class="container" style="align-items: baseline">
+            <div class="box h25"></div>
+        </div>
+
+        <h3>stretch</h3>
+        <div class="container" style="align-items: stretch">
+            <div class="box"></div>
+        </div>
+
+        <h2>References<h2>
+        <ul>
+            <li><a href="https://flexboxfroggy.com/" target="_blank">Flexbox Froggy</li>
+        </ul>
+    </body>
+</html>

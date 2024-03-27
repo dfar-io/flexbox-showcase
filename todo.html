@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Todo Task Generator</h1>
+        <h2>Today</h2>
+        <p id="weekly-task" style="color: red"></p>
+        <p id="flex-task"></p>
+
+        <h2>Tomorrow</h2>
+        <p id="weekly-task-tmrw" style="color: red"></p>
+
+        <script>
+            const date = new Date();
+            const day = date.getDay();
+
+            // 0 - Sunday
+            const weeklyTasks = [
+                'Soak, Vac, YNAB, PY',
+                'Car, Vac, Wipe',
+                'Shts, Comf, Hamp',
+                'Soak, Vac, YNAB, PY',
+                'Bal, Lvl, Cln',
+                'Soak, Vac, YNAB, PY',
+                'Eggs, Brush, Bath'
+            ];
+
+            const flexTasks = [
+                'Fix car light',
+                'Call doc/dentist (need ID card)',
+                'Green tea holder (Gridfinity)',
+                'Wobbling steering wheel',
+                'Address autocomplete sample',
+                'Todo generator - add monthly tasks'
+            ];
+
+            const weeklyTaskDisplay = document.getElementById('weekly-task');
+            weeklyTaskDisplay.innerText = weeklyTasks[day];
+
+            const weeklyTaskTmrwDisplay = document.getElementById('weekly-task-tmrw');
+            const tmrwIndex = day >= 6 ? 0 : day + 1;
+            weeklyTaskTmrwDisplay.innerText = weeklyTasks[tmrwIndex];
+
+            const flexTaskDisplay = document.getElementById('flex-task');
+            const randomIndex = Math.floor(Math.random() * flexTasks.length);
+            flexTaskDisplay.innerText = flexTasks[randomIndex];
+        </script>
+    </body>
+</html>

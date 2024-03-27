@@ -9,7 +9,7 @@
         <input id="state" placeholder="State" /><br />
         <input id="zip" placeholder="Zip" /><br />
         <input id="country" placeholder="Country" />
-        <button value="Reset" onclick="reset()" />
+        <button onclick="reset()">Reset</button>
 
         <h2>Notes</h2>
         <p>To set up an API Key for use:</p>
@@ -119,6 +119,14 @@
 
                 addressField.value = addressValue;
                 zipField.value = zipValue;
+            }
+
+            function reset() {
+                document.getElementById('address').value = "";
+                document.getElementById('city').value = "";
+                document.getElementById('state').value = "";
+                document.getElementById('zip').value = "";
+                document.getElementById('country').value = "";
             }
         </script>
     </body>

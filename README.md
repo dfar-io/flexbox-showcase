@@ -1,5 +1,5 @@
-# flexbox-showcase
-Working place for Flexbox things
+# web-utils
+Working place where I put a bunch of mini-tools as HTML pages.
 
 ## Hosting an index.html file on Github Pages
 

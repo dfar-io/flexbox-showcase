@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Address Autocomplete</h1>
+        <p> Useful for providing address autocompletion for an address field to fill in other values in an address form.</p>
+
+        <input id="address" placeholder="Address 1, start here" /><br />
+        <input id="city" placeholder="City" /><br />
+        <input id="state" placeholder="State" /><br />
+        <input id="zip" placeholder="Zip" /><br />
+        <input id="country" placeholder="Country" />
+
+        <h2>Notes</h2>
+        <p>To set up an API Key for use:</p>
+        <ol>
+            <li>Using <a href="https://console.cloud.google.com/google/maps-apis/credentials">Google Credentials</a>, create an API Key.</li>
+            <li>Edit the API key with the following:
+                <ul>
+                    <li>API Key Name</li>
+                    <li>Website restrictions: generally use websites and block by domain (you can use `__file_url__` to allow local development, but this allows all local development. If you're not sure, 2 API keys (prod/development) works well)</li>
+                    <li>API restrictions: select Places API and Maps JavaScript API</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2>Troubleshooting</h2>
+        <ul>
+            <li><b>RefererNotAllowedMapError</b> - Make sure your API key restrictions are correct.</li>
+        </ul>
+
+        <h2>Reference</h2>
+        <ul>
+            <li><a href="https://developers.google.com/maps/documentation/javascript/place-autocomplete">Google - Getting Started</a></li>
+            <li><a href="https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform">Places Autocomplete Address Form</a></li>
+        </ul>
+        <!--
+            self-created API key included below
+            callback=initAutocomplete will call the script below (or any other function you define)
+        -->
+        <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApKCV6aRikyrK5vHqEvac5YmbHWqeJCY4&loading=async&libraries=places&callback=initAutocomplete">
+        </script>
+        <script>
+            let autocomplete;
+            let addressField;
+            let zipField;
+
+            function initAutocomplete() {
+                const center = { lat: 50.064192, lng: -130.605469 };
+                // Create a bounding box with sides ~10km away from the center point
+                const defaultBounds = {
+                    north: center.lat + 0.1,
+                    south: center.lat - 0.1,
+                    east: center.lng + 0.1,
+                    west: center.lng - 0.1,
+                };
+
+                addressField = document.getElementById("address");
+                zipField = document.getElementById("zip");
+
+                const options = {
+                    bounds: defaultBounds,
+                    componentRestrictions: { country: "us" },
+                    fields: ["address_components", "geometry", "icon", "name"],
+                    strictBounds: false,
+                };
+                autocomplete = new google.maps.places.Autocomplete(address, options);
+                
+                // optional, just makes trying it out faster
+                address.focus();
+                // When the user selects an address from the drop-down, populate the
+                // address fields in the form.
+                autocomplete.addListener("place_changed", fillInAddress);
+            }
+
+            function fillInAddress() {
+                // Get the place details from the autocomplete object.
+                const place = autocomplete.getPlace();
+                let addressValue = "";
+                let zipValue = "";
+
+                // Get each component of the address from the place details,
+                // and then fill-in the corresponding field on the form.
+                // place.address_components are google.maps.GeocoderAddressComponent objects
+                // which are documented at http://goo.gle/3l5i5Mr
+                for (const component of place.address_components) {
+                    const componentType = component.types[0];
+
+                    switch (componentType) {
+                        case "street_number": {
+                            addressValue = `${component.long_name} ${addressValue}`;
+                            break;
+                        }
+                        case "route": {
+                            addressValue += component.short_name;
+                            break;
+                        }
+
+                        case "postal_code": {
+                            zipValue = `${component.long_name}${zipValue}`;
+                            break;
+                        }
+                        // City
+                        case "locality": {
+                            document.querySelector("#city").value = component.long_name;
+                            break;
+                        }
+                        case "administrative_area_level_1": {
+                            document.querySelector("#state").value = component.short_name;
+                            break;
+                        }
+                        case "country": {
+                            document.querySelector("#country").value = component.long_name;
+                            break;
+                        }
+                    }
+                }
+
+                addressField.value = addressValue;
+                zipField.value = zipValue;
+            }
+        </script>
+    </body>
+</html>
